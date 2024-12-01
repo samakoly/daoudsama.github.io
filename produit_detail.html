@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Détails du Produit</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #fff7f7;
+      color: #333;
+    }
+
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background-color: white;
+      padding: 20px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+    }
+
+    .product-image {
+      display: block;
+      max-width: 100%;
+      height: auto;
+      margin: 0 auto;
+      border-radius: 10px;
+    }
+
+    h1 {
+      text-align: center;
+      color: #e91e63;
+      font-size: 1.8em;
+    }
+
+    .details {
+      margin-top: 20px;
+    }
+
+    .details p {
+      font-size: 1em;
+      margin: 10px 0;
+      line-height: 1.5;
+    }
+
+    .price {
+      font-size: 1.5em;
+      color: #e91e63;
+      font-weight: bold;
+    }
+
+    .buttons {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+
+    .buttons button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      color: white;
+    }
+
+    .buy-btn {
+      background-color: #4caf50;
+    }
+
+    .add-to-cart-btn {
+      background-color: #2196f3;
+    }
+
+    #buyer-form-modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px;
+      border: 1px solid #ccc;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      z-index: 1000;
+    }
+
+    #buyer-form-modal input,
+    #buyer-form-modal button {
+      display: block;
+      width: 100%;
+      margin-bottom: 15px;
+    }
+
+    #buyer-form-modal button {
+      background-color: #e91e63;
+      color: white;
+      padding: 10px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1 id="product-name">Nom du Produit</h1>
+    <img id="product-image" class="product-image" src="" alt="Image du produit">
+    <div class="details">
+      <p class="price">Prix : <span id="product-price"></span> MAD</p>
+      <p><strong>Quantité disponible :</strong> <span id="product-quantity"></span></p>
+      <p><strong>Description :</strong> <span id="product-description"></span></p>
+    </div>
+    <div class="buttons">
+      <button id="add-to-cart-button" class="add-to-cart-btn">Ajouter au panier</button>
+      <button id="buy-now-button" class="buy-btn">Acheter maintenant</button>
+    </div>
+  </div>
+
+  <!-- Formulaire d'achat -->
+  <div id="buyer-form-modal">
+    <form id="buyer-form">
+      <h2>Formulaire d'achat</h2>
+      <label>Nom complet :</label>
+      <input type="text" id="buyer-name" required>
+      <label>Email :</label>
+      <input type="email" id="buyer-email" required>
+      <label>Numéro de téléphone :</label>
+      <input type="tel" id="buyer-phone" required>
+      <label>Adresse :</label>
+      <input type="text" id="buyer-address" required>
+      <label>Quantité :</label>
+      <input type="number" id="buyer-quantity" min="1" required>
+      <button type="submit">Confirmer</button>
+      <button type="button" id="cancel-button">Annuler</button>
+    </form>
+  </div>
+
+  <script>
+    const params = new URLSearchParams(window.location.search);
+    const productId = params.get('id');
+    const products = JSON.parse(localStorage.getItem('products')) || [];
+
+    if (productId && products[productId]) {
+      const product = products[productId];
+
+      document.getElementById('product-name').textContent = product.name;
+      document.getElementById('product-image').src = product.imageUrl;
+      document.getElementById('product-price').textContent = product.price;
+      document.getElementById('product-quantity').textContent = product.quantity;
+      document.getElementById('product-description').textContent = product.description || 'Pas de description disponible.';
+
+      document.getElementById('buy-now-button').addEventListener('click', () => {
+        const modal = document.getElementById('buyer-form-modal');
+        modal.style.display = 'block';
+      });
+
+      document.getElementById('cancel-button').addEventListener('click', () => {
+        document.getElementById('buyer-form-modal').style.display = 'none';
+      });
+
+      document.getElementById('buyer-form').addEventListener('submit', (e) => {
+        e.preventDefault();
+
+        const name = document.getElementById('buyer-name').value;
+        const email = document.getElementById('buyer-email').value;
+        const phone = document.getElementById('buyer-phone').value;
+        const address = document.getElementById('buyer-address').value;
+        const quantity = parseInt(document.getElementById('buyer-quantity').value);
+
+        if (quantity > product.quantity) {
+          alert("Quantité demandée non disponible.");
+          return;
+        }
+
+        product.quantity -= quantity;
+        products[productId] = product;
+        localStorage.setItem('products', JSON.stringify(products));
+        document.getElementById('product-quantity').textContent = product.quantity;
+
+        const orders = JSON.parse(localStorage.getItem('orders')) || [];
+        orders.push({
+          productName: product.name,
+          buyerName: name,
+          buyerEmail: email,
+          buyerPhone: phone,
+          buyerAddress: address,
+          buyerQuantity: quantity,
+        });
+
+        localStorage.setItem('orders', JSON.stringify(orders));
+        alert("Achat confirmé !");
+        document.getElementById('buyer-form-modal').style.display = 'none';
+      });
+    } else {
+      document.body.innerHTML = '<p>Produit non trouvé.</p>';
+    }
+    // Fonction d'ajout au panier
+    document.getElementById('add-to-cart-button').addEventListener('click', () => {
+        const cart = JSON.parse(localStorage.getItem('cart')) || {};
+  
+        if (cart[productId]) {
+          cart[productId].quantity += 1;
+        } else {
+          cart[productId] = {
+            name: product.name,
+            price: product.price,
+            quantity: 1,
+            imageUrl: product.imageUrl
+          };
+        }
+  
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert('Produit ajouté au panier!');
+      });
+  </script>
+</body>
+</html>

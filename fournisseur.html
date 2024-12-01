@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des Produits</title>
+  <link rel="stylesheet" href="style1.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Gestion des Produits</h1>
+    <h2>Ajouter des produits</h2>
+
+    <div id="noProductsMessage">
+      <p>Aucun produit disponible.</p>
+    </div>
+
+    <div id="productButtons">
+      <button id="addProductButton">Ajouter un produit</button>
+    </div>
+
+    <div id="productFormContainer" class="hidden">
+      <form id="productForm">
+        <label for="productName">Nom :</label>
+        <input type="text" id="productName" placeholder="Nom du produit" required>
+        
+        <label for="productPrice">Prix :</label>
+        <input type="number" id="productPrice" placeholder="Prix (MAD)" required>
+        
+        <label for="productQuantity">Quantité :</label>
+        <input type="number" id="productQuantity" placeholder="Quantité" required>
+        
+        <label for="productImage">Image :</label>
+        <input type="file" id="productImage" required>
+        <label for="productDescription">Description :</label>
+<textarea id="productDescription" placeholder="Description du produit" required></textarea>
+
+<label for="productVideo">Vidéo (optionnelle) :</label>
+<input type="file" id="productVideo">
+
+        
+        <button type="submit">Ajouter</button>
+      </form>
+    </div><br>
+    <button><a href="produit.html">Aller à la page produits</a></button>
+    <button><a href="gestion_produit.html">gestion des achats</a></button>
+  </div>
+  
+  <script src="script1.js"></script>
+</body>
+</html>

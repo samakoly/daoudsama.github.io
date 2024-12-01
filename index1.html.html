@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Choix du rôle</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Conteneur principal -->
+  <div class="container">
+    <h1>Bienvenue sur notre plateforme</h1>
+    <p>Accédez à notre site en tant que :</p>
+    <div class="role-selection">
+      <button id="btnFournisseur">Fournisseur</button>
+      <button id="btnAcheteur">Acheteur</button>
+    </div>
+
+    <!-- Formulaire de connexion masqué par défaut -->
+    <div id="formContainer" class="hidden">
+      <h2>Connexion Fournisseur</h2>
+      <form id="loginForm">
+        <label for="email">Email :</label>
+        <input type="email" id="email" placeholder="Entrez votre email" required>
+        
+        <label for="password">Mot de passe :</label>
+        <input type="password" id="password" placeholder="Entrez votre mot de passe" required>
+        
+        <button type="submit">Se connecter</button>
+      </form>
+      <p id="message"></p>
+    </div>
+  </div>
+
+  <!-- Fond animé -->
+  <div class="lines"></div>
+
+  <script src="script.js"></script>
+</body>
+</html>

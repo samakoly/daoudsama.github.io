@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Produits de Kelaat M'gouna</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(120deg, #f5a9b8, #d96c96);
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        header {
+            background-color: rgba(0, 0, 0, 0.6);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+            text-transform: uppercase;
+            font-weight: bold;
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        header h1.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            gap: 20px;
+            opacity: 0;
+            transition: opacity 1s ease-out;
+        }
+
+        nav ul.active {
+            opacity: 1;
+        }
+
+        main {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        main h2 {
+            font-size: 32px;
+            margin: 10px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+
+        main h2.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        main p {
+            font-size: 18px;
+            margin: 15px 0;
+            opacity: 0;
+            transition: opacity 1.2s ease-out 0.5s;
+        }
+
+        main p.active {
+            opacity: 1;
+        }
+
+        main button {
+            background-color: #f67280;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            color: white;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+            opacity: 0;
+            transform: scale(0.9);
+            transition: opacity 1s ease-out 0.7s, transform 1s ease-out 0.7s;
+        }
+
+        main button.active {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .contact {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 10px 0;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out 0.7s, transform 1s ease-out 0.7s;
+        }
+
+        .contact.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .contact a {
+            text-decoration: none;
+            color: white;
+            width: 60px; /* Taille du cercle */
+            height: 60px; /* Taille du cercle */
+            background-color: #f67280;
+            border-radius: 50%; /* Forme circulaire */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin: 0 10px;
+            font-size: 20px;
+            transition: background-color 0.3s ease, transform 0.3s ease;
+            overflow: hidden; /* Assurer que l'image ne dépasse pas le cercle */
+        }
+
+        .contact a:hover {
+            background-color: #c06c84;
+            transform: scale(1.1);
+        }
+
+        .contact a img {
+            width: 40px; /* Taille de l'image à l'intérieur du cercle */
+            height: 40px; /* Taille de l'image à l'intérieur du cercle */
+            object-fit: cover; /* S'assurer que l'image s'adapte à l'intérieur du cercle sans être déformée */
+        }
+
+        a {
+            text-decoration: none;
+            color: white;
+        }
+        img{
+          border-radius: 50%;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Kelaat M'gouna</h1>
+        <nav>
+            <ul>
+                <li><a href="apropos.html">À propos</a></li>
+            </ul>
+        </nav>
+    </header>
+
+    <main>
+        <h2>Découvrez les produits authentiques de Kelaat M'gouna</h2>
+        <p>Des produits artisanaux de haute qualité, directement du cœur de la vallée des roses.</p>
+        <button><a href="index1.html.html">Commander Maintenant</a></button>
+    </main>
+
+    <div class="contact">
+       
+        <!-- Facebook icon (image locale) -->
+        <a href="https://www.facebook.com/profile.php?id=61569373198659&mibextid=ZbWKwL" target="_blank">
+            <img src="facebook.png" alt="Facebook">
+        </a>
+        <!-- Email icon (image locale) -->
+        <a href="daoudsama70@gmail.com">
+            <img src="email.png" alt="Email">
+        </a>
+        <!-- Phone icon (image locale) -->
+        <a href="tel:+212667079873">
+            <img src="tele.jpg" alt="Phone">
+        </a>
+    </div>
+
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Activer les animations
+            document.querySelector('header h1').classList.add('active');
+            document.querySelector('header nav ul').classList.add('active');
+            document.querySelector('main h2').classList.add('active');
+            document.querySelector('main p').classList.add('active');
+            document.querySelector('main button').classList.add('active');
+            document.querySelector('.contact').classList.add('active');
+        });
+    </script>
+</body>
+</html>

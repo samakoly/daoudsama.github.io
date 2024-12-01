@@ -1,0 +1,109 @@
+/* Styles principaux */
+body {
+  font-family: 'Poppins', sans-serif;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  overflow: hidden; /* Cache les animations hors vue */
+  background-color: #fff6f6; /* Fond doux */
+}
+
+.container {
+  background: rgba(251, 234, 232, 0.9); /* Beige rosé translucide */
+  padding: 50px;
+  border-radius: 10px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+  width: 500px;
+  text-align: center;
+  border: 2px solid #f5a9b8;
+  z-index: 2;
+  position: relative;
+}
+
+h1 {
+  color: #d96c96;
+  font-size: 24px;
+}
+
+h2 {
+  color: #c85576;
+  font-size: 20px;
+}
+
+p {
+  margin: 10px 0;
+  color: #7b2e4d;
+  font-weight: bold;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+label {
+  margin-bottom: 5px;
+  font-weight: bold;
+  color: #7b2e4d;
+}
+
+input {
+  margin-bottom: 15px;
+  padding: 10px;
+  border: 1px solid #f5a9b8;
+  border-radius: 5px;
+}
+
+button {
+  background-color: #d96c96;
+  color: white;
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  font-weight: bold;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background-color: #c85576;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  transform: translateY(-2px);
+}
+
+.hidden {
+  display: none;
+}
+
+/* Fond animé avec des lignes */
+.lines {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.line {
+  position: absolute;
+  width: 2px;
+  height: 100vh;
+  background: #f5a9b8;
+  animation: move 4s linear infinite;
+}
+
+@keyframes move {
+  from {
+    transform: translateY(-100%);
+  }
+  to {
+    transform: translateY(100%);
+  }
+}

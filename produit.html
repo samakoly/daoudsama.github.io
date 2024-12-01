@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Kelaat M'Gouna - Produits</title>
+  <style>
+    /* Style général */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: #fff7f7;
+      color: #333;
+    }
+
+    header {
+      background-color: #e91e63;
+      color: white;
+      padding: 20px;
+      text-align: center;
+      background-image: url('https://via.placeholder.com/1200x500?text=Rose+Background');
+      background-size: cover;
+      background-position: center;
+      background-blend-mode: overlay;
+      position: relative;
+    }
+
+    header h1 {
+      margin: 0;
+      font-size: 2.5em;
+    }
+
+    header p {
+      font-size: 1.2em;
+    }
+
+    #search {
+      margin-top: 10px;
+      padding: 10px;
+      width: 80%;
+      max-width: 500px;
+      border: 2px solid #e91e63;
+      border-radius: 20px;
+    }
+
+    .cart-button {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 1em;
+      transition: background-color 0.3s;
+    }
+
+    .cart-button:hover {
+      background-color: #45a049;
+    }
+
+    .cart-count {
+      background-color: white;
+      color: #4caf50;
+      font-weight: bold;
+      border-radius: 50%;
+      padding: 5px 10px;
+      position: absolute;
+      top: -5px;
+      right: -10px;
+      font-size: 0.8em;
+    }
+
+    main {
+      padding: 20px;
+    }
+
+    h2 {
+      text-align: center;
+      font-size: 1.8em;
+      margin-bottom: 20px;
+      color: #e91e63;
+    }
+
+    .product-list {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+      gap: 20px;
+    }
+
+    .product {
+      background-color: white;
+      margin: 10px;
+      padding: 15px;
+      width: 200px;
+      box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+      border-radius: 10px;
+      text-align: center;
+      transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+    .product:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .product img {
+      width: 100%;
+      height: 150px;
+      object-fit: cover;
+      border-radius: 5px;
+    }
+
+    .product h3 {
+      margin-top: 15px;
+      font-size: 1.2em;
+      color: #e91e63;
+    }
+
+    footer {
+      text-align: center;
+      padding: 15px;
+      background-color: #333;
+      color: white;
+      margin-top: 30px;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>Kelaat M'Gouna</h1>
+    <p>Commercer avec les roses de la vallée</p>
+    <input type="text" id="search" placeholder="Rechercher des produits...">
+    <button class="cart-button" onclick="goToCart()">
+      Panier <span id="cart-count" class="cart-count">0</span>
+    </button>
+  </header>
+
+  <main>
+    <h2>Nos Produits</h2>
+    <div id="product-list" class="product-list"></div>
+  </main>
+
+  <footer>
+    <p>&copy; 2024 Kelaat M'Gouna E-Commerce. Tous droits réservés.</p>
+  </footer>
+
+  <script>
+    const productListContainer = document.getElementById('product-list');
+    const searchInput = document.getElementById('search');
+    const cartCount = document.getElementById('cart-count');
+
+    // Charger les produits depuis le localStorage
+    let products = JSON.parse(localStorage.getItem('products')) || [];
+    let cart = JSON.parse(localStorage.getItem('cart')) || {};
+
+    // Fonction pour mettre à jour le compteur du panier
+    function updateCartCount() {
+      const totalItems = Object.values(cart).reduce((sum, product) => sum + product.quantity, 0);
+      cartCount.textContent = totalItems;
+    }
+
+    // Fonction pour afficher les produits
+    function displayProducts(products) {
+      productListContainer.innerHTML = '';
+
+      if (products.length === 0) {
+        productListContainer.innerHTML = '<p>Aucun produit disponible.</p>';
+        return;
+      }
+
+      products.forEach((product, index) => {
+        const productElement = document.createElement('div');
+        productElement.classList.add('product');
+        productElement.innerHTML = `
+          <img src="${product.imageUrl}" alt="${product.name}">
+          <h3>${product.name}</h3>
+          <a href="produit_detail.html?id=${index}" class="details-link">Voir les détails</a>
+        `;
+        productListContainer.appendChild(productElement);
+      });
+    }
+
+    // Rediriger vers la page du panier
+    function goToCart() {
+      window.location.href = 'panie.html';
+    }
+
+    // Recherche de produits
+    searchInput.addEventListener('input', function (e) {
+      const query = e.target.value.toLowerCase();
+      const filteredProducts = products.filter(product =>
+        product.name.toLowerCase().includes(query)
+      );
+      displayProducts(filteredProducts);
+    });
+
+    // Chargement initial
+    document.addEventListener('DOMContentLoaded', () => {
+      displayProducts(products);
+      updateCartCount();
+    });
+  </script>
+</body>
+</html>

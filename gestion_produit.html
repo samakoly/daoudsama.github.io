@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gestion des Achats</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 20px;
+      background-color: #f7f7f7;
+      color: #333;
+    }
+
+    h1 {
+      text-align: center;
+      color: #e91e63;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-top: 20px;
+    }
+
+    table th, table td {
+      border: 1px solid #ddd;
+      padding: 8px;
+      text-align: left;
+    }
+
+    table th {
+      background-color: #e91e63;
+      color: white;
+    }
+
+    table tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+
+    table tr:hover {
+      background-color: #ddd;
+    }
+  </style>
+</head>
+<body>
+  <h1>Gestion des Achats</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Nom du Produit</th>
+        <th>Nom du Client</th>
+        <th>Email</th>
+        <th>Téléphone</th>
+        <th>Adresse Résidentielle</th>
+        <th>Quantité</th>
+      </tr>
+    </thead>
+    <tbody id="orders-table">
+      <!-- Les commandes seront ajoutées ici dynamiquement -->
+    </tbody>
+  </table>
+
+  <script>
+    const orders = JSON.parse(localStorage.getItem('orders')) || [];
+    const ordersTable = document.getElementById('orders-table');
+
+    if (orders.length > 0) {
+      orders.forEach(order => {
+        const row = document.createElement('tr');
+
+        row.innerHTML = `
+          <td>${order.productName}</td>
+          <td>${order.buyerName}</td>
+          <td>${order.buyerEmail}</td>
+          <td>${order.buyerPhone}</td>
+          <td>${order.buyerAddress}</td>
+          <td>${order.buyerQuantity}</td>
+        `;
+
+        ordersTable.appendChild(row);
+      });
+    } else {
+      ordersTable.innerHTML = '<tr><td colspan="6" style="text-align:center;">Aucune commande disponible.</td></tr>';
+    }
+  </script>
+</body>
+</html>
