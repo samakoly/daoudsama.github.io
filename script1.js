@@ -27,13 +27,14 @@ productForm.addEventListener('submit', function (e) {
   const name = document.getElementById('productName').value;
   const price = document.getElementById('productPrice').value;
   const quantity = document.getElementById('productQuantity').value;
+  const description = document.getElementById('productDescription').value; // Ajouter la description
   const imageFile = document.getElementById('productImage').files[0];
 
-  if (name && price && quantity && imageFile) {
+  if (name && price && quantity && description && imageFile) {
     const reader = new FileReader();
     reader.onload = function (event) {
       const imageUrl = event.target.result; // Convertir en Base64
-      products.push({ name, price, quantity, imageUrl });
+      products.push({ name, price, quantity, description, imageUrl }); // Ajouter la description au produit
       localStorage.setItem('products', JSON.stringify(products));
 
       alert(`Produit "${name}" ajouté avec succès !`);
@@ -42,8 +43,11 @@ productForm.addEventListener('submit', function (e) {
       checkProducts();
     };
     reader.readAsDataURL(imageFile); // Convertir l'image en Base64
+  } else {
+    alert('Veuillez remplir tous les champs obligatoires.');
   }
 });
+
 
 // Chargement initial
 document.addEventListener('DOMContentLoaded', () => {
