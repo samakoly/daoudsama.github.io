@@ -156,8 +156,102 @@
             text-decoration: none;
             color: white;
         }
-        img{
-          border-radius: 50%;
+
+        img {
+            border-radius: 50%;
+        }
+
+        /* Media queries pour les petits écrans (mobiles) */
+        @media (max-width: 768px) {
+            header {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            header h1 {
+                font-size: 20px;
+                text-align: center;
+            }
+
+            nav ul {
+                flex-direction: column;
+                align-items: center;
+                margin-top: 10px;
+            }
+
+            nav ul li {
+                margin-bottom: 10px;
+            }
+
+            main {
+                padding: 10px;
+            }
+
+            main h2 {
+                font-size: 24px;
+            }
+
+            main p {
+                font-size: 16px;
+                margin: 10px 0;
+            }
+
+            main button {
+                font-size: 16px;
+                padding: 8px 16px;
+            }
+
+            
+
+            .contact a {
+                width: 50px;
+                height: 50px;
+                font-size: 18px;
+            }
+
+            .contact a img {
+                width: 30px;
+                height: 30px;
+            }
+        }
+
+        /* Media queries pour les très petits écrans (smartphones) */
+        @media (max-width: 480px) {
+            header {
+                padding: 10px 15px;
+            }
+
+            header h1 {
+                font-size: 18px;
+            }
+
+            main {
+                padding: 5px;
+            }
+
+            main h2 {
+                font-size: 20px;
+            }
+
+            main p {
+                font-size: 14px;
+            }
+
+            main button {
+                font-size: 14px;
+                padding: 6px 12px;
+            }
+
+            .contact a {
+                width: 45px;
+                height: 45px;
+                font-size: 16px;
+            }
+
+            .contact a img {
+                width: 25px;
+                height: 25px;
+            }
         }
     </style>
 </head>
@@ -178,7 +272,6 @@
     </main>
 
     <div class="contact">
-       
         <!-- Facebook icon (image locale) -->
         <a href="https://www.facebook.com/profile.php?id=61569373198659&mibextid=ZbWKwL" target="_blank">
             <img src="facebook.png" alt="Facebook">
