@@ -59,49 +59,118 @@
     }
 
     .buttons button {
-      padding: 10px 20px;
+      padding: 15px 25px;
       border: none;
-      border-radius: 5px;
+      border-radius: 50px;
       font-size: 1em;
+      font-weight: bold;
       cursor: pointer;
-      color: white;
+      transition: all 0.3s ease-in-out;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
     }
 
     .buy-btn {
-      background-color: #4caf50;
+      background-color: #af4c96;
+      color: white;
+    }
+
+    .buy-btn:hover {
+      background-color: #a04585;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
     }
 
     .add-to-cart-btn {
-      background-color: #2196f3;
+      background-color: #f321d0;
+      color: white;
+    }
+
+    .add-to-cart-btn:hover {
+      background-color: #e51ead;
+      transform: scale(1.1);
+      box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+    }
+
+    .buttons button:hover {
+      transform: translateY(-5px);
     }
 
     #buyer-form-modal {
-      display: none;
+      display: none; /* Garder initialement caché */
       position: fixed;
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-      background: white;
-      padding: 20px;
+      background: #fff;
+      padding: 30px;
       border: 1px solid #ccc;
-      box-shadow: 0 0 15px rgba(0, 0, 0, 0.3);
+      box-shadow: 0 0 25px rgba(0, 0, 0, 0.2);
       z-index: 1000;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 500px;
     }
 
-    #buyer-form-modal input,
-    #buyer-form-modal button {
-      display: block;
+    #buyer-form-modal.show {
+      display: block; /* Lorsque la classe show est ajoutée, afficher le modal */
+    }
+
+    #buyer-form-modal h2 {
+      font-size: 1.6em;
+      color: #e91e63;
+      margin-bottom: 20px;
+      text-align: center;
+    }
+
+    #buyer-form-modal input {
       width: 100%;
-      margin-bottom: 15px;
+      padding: 12px;
+      margin: 10px 0;
+      border-radius: 8px;
+      border: 1px solid #ccc;
+      font-size: 1em;
+      box-sizing: border-box;
+      transition: border 0.3s;
+    }
+
+    #buyer-form-modal input:focus {
+      border: 1px solid #e91e63;
+      outline: none;
     }
 
     #buyer-form-modal button {
       background-color: #e91e63;
       color: white;
-      padding: 10px;
+      padding: 12px;
+      border-radius: 8px;
+      font-size: 1.1em;
       border: none;
-      border-radius: 5px;
       cursor: pointer;
+      transition: background-color 0.3s;
+    }
+
+    #buyer-form-modal button:hover {
+      background-color: #d81b60;
+    }
+
+    #buyer-form-modal #cancel-button {
+      background-color: #ccc;
+      color: #333;
+      margin-top: 10px;
+    }
+
+    #buyer-form-modal #cancel-button:hover {
+      background-color: #bbb;
+    }
+
+    /* Animation pour modal */
+    #buyer-form-modal {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+    }
+
+    #buyer-form-modal.show {
+      opacity: 1;
     }
   </style>
 </head>
@@ -124,15 +193,15 @@
   <div id="buyer-form-modal">
     <form id="buyer-form">
       <h2>Formulaire d'achat</h2>
-      <label>Nom complet :</label>
+      <label for="buyer-name">Nom complet :</label>
       <input type="text" id="buyer-name" required>
-      <label>Email :</label>
+      <label for="buyer-email">Email :</label>
       <input type="email" id="buyer-email" required>
-      <label>Numéro de téléphone :</label>
+      <label for="buyer-phone">Numéro de téléphone :</label>
       <input type="tel" id="buyer-phone" required>
-      <label>Adresse :</label>
+      <label for="buyer-address">Adresse :</label>
       <input type="text" id="buyer-address" required>
-      <label>Quantité :</label>
+      <label for="buyer-quantity">Quantité :</label>
       <input type="number" id="buyer-quantity" min="1" required>
       <button type="submit">Confirmer</button>
       <button type="button" id="cancel-button">Annuler</button>
@@ -155,11 +224,11 @@
 
       document.getElementById('buy-now-button').addEventListener('click', () => {
         const modal = document.getElementById('buyer-form-modal');
-        modal.style.display = 'block';
+        modal.classList.add('show');
       });
 
       document.getElementById('cancel-button').addEventListener('click', () => {
-        document.getElementById('buyer-form-modal').style.display = 'none';
+        document.getElementById('buyer-form-modal').classList.remove('show');
       });
 
       document.getElementById('buyer-form').addEventListener('submit', (e) => {
@@ -188,22 +257,19 @@
           buyerEmail: email,
           buyerPhone: phone,
           buyerAddress: address,
-          buyerQuantity: quantity,
+          quantity,
+          totalPrice: product.price * quantity
         });
-
         localStorage.setItem('orders', JSON.stringify(orders));
-        alert("Achat confirmé !");
-        document.getElementById('buyer-form-modal').style.display = 'none';
+
+        alert('Commande confirmée !');
+        document.getElementById('buyer-form-modal').classList.remove('show');
       });
-    } else {
-      document.body.innerHTML = '<p>Produit non trouvé.</p>';
-    }
-    // Fonction d'ajout au panier
-    document.getElementById('add-to-cart-button').addEventListener('click', () => {
+
+      document.getElementById('add-to-cart-button').addEventListener('click', () => {
         const cart = JSON.parse(localStorage.getItem('cart')) || {};
-  
         if (cart[productId]) {
-          cart[productId].quantity += 1;
+          cart[productId].quantity++;
         } else {
           cart[productId] = {
             name: product.name,
@@ -212,10 +278,10 @@
             imageUrl: product.imageUrl
           };
         }
-  
         localStorage.setItem('cart', JSON.stringify(cart));
         alert('Produit ajouté au panier!');
       });
+    }
   </script>
 </body>
 </html>
